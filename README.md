@@ -4,6 +4,7 @@ The data set for our project was found here https://www.imdb.com/interfaces/ We 
 We currently plan on using an altered version of KNN classification system to provide movie recommendations.
 
 The strong features are: Title, Genre
+
 The weak features are: Startyear, Runtime, Ratings
 We hope to eventually include directors, writers, and actors, but those are a bit harder for use to parse through currently.
 
