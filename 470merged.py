@@ -17,7 +17,7 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
     for movie in moviedict:
         if movie == moviename:
             givenvector = moviedict[movie]
-            moviedict.pop(movie)
+            # moviedict.pop(movie)
 
 
     if givenvector == {}:  #####just some basic error checking to make sure we found a movie
@@ -37,31 +37,36 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
 
     for movie in moviedict:  ####now we need to set up the movie vectors and run the comparisons
         bmovie = moviedict[movie]  ####get the dict for current movie
+        # for i in bmovie:
+        #     print(i)
         if list(givenvector)[0] == list(bmovie)[0]:
             key = list(bmovie)[0]
             bmovie[key] = 1
+            continue
         if list(givenvector)[1] == list(bmovie)[1]:
             key = list(bmovie)[1]
             bmovie[key] = 1
-        if abs(list(bmovie[2])-list(givenvector)[2]) <=15:
+        if abs(int(list(bmovie)[2])-int(list(givenvector)[2])) <= 15:
             key = list(bmovie)[2]
             bmovie[key] = 1
         if list(givenvector)[3] == list(bmovie)[3]:
             key = list(bmovie)[3]
             bmovie[key] = 1
-        if abs(list(bmovie[4])-list(givenvector)[4]) <=1:
+        if abs(float(list(bmovie)[4])-float(list(givenvector)[4])) <= 1:
             key = list(bmovie)[4]
             bmovie[key] = 1
-        ####start the knn equation
+    ####start the knn equation
         abot = 0
         for word in givenvector:
             abot += givenvector[word] * givenvector[word]
         asbot = math.sqrt(abot)
+        # print(asbot)
 
         bbot = 0
         for word in bmovie:
             bbot += bmovie[word] * bmovie[word]
         bsbot = math.sqrt(bbot)
+
 
         bot = bsbot * asbot
         top = 0
@@ -71,7 +76,7 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
                     top += givenvector[word] * bmovie[word]
 
         ##########determine a minner
-        simularity = top / bot
+        simularity = top / bot if bot > 0 else 0
         if simularity > win1:
             win3 = win2
             mov3 = mov2
@@ -89,21 +94,21 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
             mov3 = movie
 
     #####print the winning movies
-    print(mov1)
-    print(mov2)
-    print(mov3)
+    print(mov1,win1)
+    print(mov2,win2)
+    print(mov3,win3)
 
 pd.options.display.width = 0
-
 
 name_basics_df = pd.read_csv('Data/name_basics/data.tsv', sep='\t', dtype=str, nrows=5000)
 title_basics_df = pd.read_csv('Data/title_basics/data.tsv', sep='\t', dtype={'startYear': 'int32'}, nrows=5000)
 title_basics_df = title_basics_df.rename(columns={'tconst':'titleId'})
+title_basics_df = title_basics_df.replace(to_replace = "\\N", value = "0")
+title_basics_df = title_basics_df.astype({'runtimeMinutes' : 'int32' })
 title_akas_df = pd.read_csv('Data/title_akas/data.tsv', sep='\t', dtype=str, nrows=5000)
 title_rating_df = pd.read_csv('Data/title_ratings/data.tsv', sep='\t', dtype=str, nrows=5000)
 title_crew_df = pd.read_csv('Data/title_crew/data.tsv', sep='\t', dtype=str, nrows=5000)
 title_crew_df = title_crew_df.rename(columns={'tconst':'tconst1'})
-
 
 title = title_akas_df[title_akas_df["region"]=="US"]
 # title_basics_df = title_basics_df[title_basics_df["startYear"] > 2000]
