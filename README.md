@@ -6,6 +6,8 @@ The data set was first cleaned and filtered to include movie title, titleId, gen
 To run 470.py (Clean/filters data and generates dictionary with movie name and its attributes): 
 - Install python3 
 - Install pandas: 'pip3 install pandas'
+- Make sure you are able to import math
+- Download
 
 We currently plan on using an altered version of KNN classification system to provide movie recommendations.
 
