@@ -3,11 +3,14 @@ The data set for our project was found here https://www.imdb.com/interfaces/ We 
 
 The data set was first cleaned and filtered to include movie title, titleId, genre, average rating, runtime, and year. Our data was loaded into a dictionary which will be then introduced into our KNN classification system. 
 
-To run 470.py (Clean/filters data and generates dictionary with movie name and its attributes): 
+
+To run 470merged.py (Clean/filters data and generates dictionary with movie name and its attributes and runs our KNN algorithm): 
 - Install python3 
 - Install pandas: 'pip3 install pandas'
 - Make sure you are able to import math
-- Download and unzip the title.akas.tsv.gz, title.basics.tsv.gz, title.crew.tsv.gz, title.ratings.tsv.gz, and name.basics.tsv.gz files from the IMBD page linked here (https://datasets.imdbws.com/).
+- Download and unzip the title.akas.tsv.gz, title.basics.tsv.gz, title.crew.tsv.gz, title.ratings.tsv.gz, and name.basics.tsv.gz files from the IMBD page linked here (https://datasets.imdbws.com/). Our dataset is too big to upload to the github so download the dataset to a folder named "Data" on your local computer.
+- Rename folders to title_akas, title_basics, title_crew, title_ratings, name_basics
+- Run the python script by running "python3 470merged.py" on the terminal
 
 
 We currently plan on using an altered version of KNN classification system to provide movie recommendations.
