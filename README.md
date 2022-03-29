@@ -9,8 +9,8 @@ To run 470merged.py (Clean/filters data and generates dictionary with movie name
 - Install pandas: 'pip3 install pandas'
 - Make sure you are able to import math
 - Download and unzip the title.akas.tsv.gz, title.basics.tsv.gz, title.crew.tsv.gz, title.ratings.tsv.gz, and name.basics.tsv.gz files from the IMBD page linked here (https://datasets.imdbws.com/). Our dataset is too big to upload to the github so download the dataset to a folder named "Data" on your local computer.
-- Rename folders to title_akas, title_basics, title_crew, title_ratings, name_basics
-- Run the python script by running "python3 470merged.py" on the terminal
+- Rename folders to title_akas, title_basics, title_crew, title_ratings, name_basics. Make sure these 5 folders are under the "Data" folder.
+- Run the python script by running "python3 470merged.py" on the terminal. (Note: The "470merged.py" should be in the same directory as the "Data" folder)
 
 
 We currently plan on using an altered version of KNN classification system to provide movie recommendations.
