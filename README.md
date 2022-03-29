@@ -15,7 +15,7 @@ To run 470merged.py (Clean/filters data and generates dictionary with movie name
 
 We currently plan on using an altered version of KNN classification system to provide movie recommendations.
 
-The strong features are: Title, Genre
+The strong features are: Genre
 
 The weak features are: Startyear, Runtime, Ratings
 
