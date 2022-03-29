@@ -7,7 +7,8 @@ To run 470.py (Clean/filters data and generates dictionary with movie name and i
 - Install python3 
 - Install pandas: 'pip3 install pandas'
 - Make sure you are able to import math
-- Download
+- Download and unzip the title.akas.tsv.gz, title.basics.tsv.gz, title.crew.tsv.gz, title.ratings.tsv.gz, and name.basics.tsv.gz files from the IMBD page linked here (https://datasets.imdbws.com/).
+
 
 We currently plan on using an altered version of KNN classification system to provide movie recommendations.
 
