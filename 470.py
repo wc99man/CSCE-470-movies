@@ -2,12 +2,12 @@ import pandas as pd
 pd.options.display.width = 0
 
 
-name_basics_df = pd.read_csv('Data/name_basics/data.tsv', sep='\t', dtype=str, nrows=5000)
-title_basics_df = pd.read_csv('Data/title_basics/data.tsv', sep='\t', dtype={'startYear': 'int32'}, nrows=5000)
+name_basics_df = pd.read_csv('Data/name_basics/data.tsv', sep='\t', dtype=str)
+title_basics_df = pd.read_csv('Data/title_basics/data.tsv', sep='\t', dtype=str)
 title_basics_df = title_basics_df.rename(columns={'tconst':'titleId'})
-title_akas_df = pd.read_csv('Data/title_akas/data.tsv', sep='\t', dtype=str, nrows=5000)
-title_rating_df = pd.read_csv('Data/title_ratings/data.tsv', sep='\t', dtype=str, nrows=5000)
-title_crew_df = pd.read_csv('Data/title_crew/data.tsv', sep='\t', dtype=str, nrows=5000)
+title_akas_df = pd.read_csv('Data/title_akas/data.tsv', sep='\t', dtype=str)
+title_rating_df = pd.read_csv('Data/title_ratings/data.tsv', sep='\t', dtype=str)
+title_crew_df = pd.read_csv('Data/title_crew/data.tsv', sep='\t', dtype=str)
 title_crew_df = title_crew_df.rename(columns={'tconst':'tconst1'})
 
 
@@ -30,6 +30,7 @@ for index in title_merged.index:
     movieName = title_merged['title'][index]
     title_dict[movieName] = {'titleId' : title_merged['titleId'][index],'Year' : title_merged['startYear'][index],'Runtime' : title_merged['runtimeMinutes'][index], 'Genres' : title_merged['genres'][index], 'Rating' : title_merged['averageRating'][index]}
 
-print(title_dict)
+# print(title_dict)
 # print(title_merged)
 
+tsvfile = title_merged.to_csv("output.csv")
