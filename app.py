@@ -112,9 +112,26 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
             win3 = simularity
             mov3 = movie
 
-    #####print the winning movies
+    
+    rec_movies = []
+    
+    result_dict = {}
+    #Movie names in movies_list
     movies_list = [mov1, mov2, mov3]
-    return movies_list
+
+    #Appends all attributes of recommended movies into rec_movies and returns it
+    for i in movies_list:
+        result_dict = {
+            'title' : i,
+            'year' : title_merged.loc[title_merged['title'] == i, 'startYear'].iloc[0],
+            'runtime' : title_merged.loc[title_merged['title'] == i, 'runtimeMinutes'].iloc[0],
+            'genres' : title_merged.loc[title_merged['title'] == i, 'genres'].iloc[0],
+            'rating' : title_merged.loc[title_merged['title'] == i, 'averageRating'].iloc[0]
+
+        }
+        rec_movies.append(result_dict)
+        
+    return rec_movies
 
 
 app = Flask(__name__)
@@ -128,8 +145,7 @@ def home():
         movies =  predict(userMovie, title_dict)
     else:
        movies 
-    # print(movies)
-
+    
     return render_template('index.html', movies=movies)
 
 
