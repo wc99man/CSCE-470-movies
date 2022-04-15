@@ -6,18 +6,28 @@ import numpy as np
 import math
 
 
-# pd.options.display.width = 0
+pd.options.display.width = 0
+
 
 title_merged = pd.read_csv('Data/output.csv')
+title_merged['startYear'] = title_merged['startYear'].replace('\\N','0000')
 title_merged['runtimeMinutes'] = title_merged['runtimeMinutes'].replace('\\N','0')
 title_merged['genres'] = title_merged['genres'].replace('\\N','None')
+title_merged['directors'] = title_merged['directors'].replace('\\N','None1')
+title_merged['writers'] = title_merged['writers'].replace('\\N','None2')
+
+
+title_merged['writers'] = np.where( title_merged['directors'] == title_merged['writers'] , 'same', title_merged['writers'])
 
 #Converts title_merged df into dictionary (Format --> {movieName : {'titleId' : ..., 'Year': ..., etc.)
 title_dict = {title_merged['title'][index]:{} for index in title_merged.index}
 
 for index in title_merged.index:
     movieName = title_merged['title'][index]
+
     title_dict[movieName] = {title_merged['titleId'][index] : 0, title_merged['startYear'][index] : 0, title_merged['runtimeMinutes'][index] : 0, title_merged['genres'][index] : 0, title_merged['averageRating'][index] : 0, title_merged['directors'][index] : 0, title_merged['writers'][index] : 0}
+# print(title_dict) 
+
 
 def predict(moviename, moviedict):  ##### we need the name of the movie so we can make a new vector for it
 
@@ -36,43 +46,58 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
     for movie in moviedict:
         if movie == moviename:
             givenvector = moviedict[movie]
+        
             # moviedict.pop(movie)
 
+#######################################this line prevents us from comparing the given movie with itself. This might not have been an issue, and can be easaly removed
+    # moviedict.pop(moviename)
+#########################
 
     if givenvector == {}:  #####just some basic error checking to make sure we found a movie
         print("Movie not found. Please check that you entered the official movie title.")
         return {}
     ####this is the best way I found to set a value at a specific entry location in a dict
     key = list(givenvector)[0]
-    givenvector[key] = 0  ######### we need to set to what ever value we want
+    givenvector[key] = 0  ######### movie ID is set to 0 since we are not comparing it
     key = list(givenvector)[1]
-    givenvector[key] = 5  ######### we need to set to what ever value we want
+    givenvector[key] = 15  ######### start year is considered a bad indicator so it's value is low
     key = list(givenvector)[2]
-    givenvector[key] = 3  ######### we need to set to what ever value we want
+    givenvector[key] = 3  ######### runtime is also considered a bad indicator
     key = list(givenvector)[3]
-    givenvector[key] = 20  ######### we need to set to what ever value we want
+    givenvector[key] = 20  ######### genre is a strong indicator so we value it heavaly
     key = list(givenvector)[4]
-    givenvector[key] = 10  ######### we need to set to what ever value we want
+    givenvector[key] = 5  ######### ratings are a middling indicator so it has a decent score
+    key = list(givenvector)[5]
+    givenvector[key] = 20  ######### directors is considered a strong indicator###################################
+    # print(list(givenvector)[5])
+    key = list(givenvector)[6]
+    givenvector[key] = 20  ######### writers is also a strong indicator######################################
 
     for movie in moviedict:  ####now we need to set up the movie vectors and run the comparisons
         bmovie = moviedict[movie]  ####get the dict for current movie
-        # for i in bmovie:
-        #     print(i)
+        # if len(bmovie) != 7:
+        #     print(list(bmovie)[0], len(bmovie))
         if list(givenvector)[0] == list(bmovie)[0]:
             key = list(bmovie)[0]
             bmovie[key] = 1
             continue
-        if list(givenvector)[1] == list(bmovie)[1]:
+        if abs(int(list(givenvector)[1]) - int(list(bmovie)[1])) <= 2 and int(list(bmovie)[1]) != 0000 and int(list(givenvector)[1]) != 0000:
             key = list(bmovie)[1]
             bmovie[key] = 1
-        if abs(int(list(bmovie)[2])-int(list(givenvector)[2])) <= 15:
+        if abs(int(list(bmovie)[2])-int(list(givenvector)[2])) <= 15 and int(list(bmovie)[2]) != 0 and int(list(givenvector)[2]) != 0 :
             key = list(bmovie)[2]
             bmovie[key] = 1
-        if list(givenvector)[3] == list(bmovie)[3]:
+        if list(givenvector)[3] == list(bmovie)[3] and list(bmovie)[3] != 'None':
             key = list(bmovie)[3]
             bmovie[key] = 1
         if abs(float(list(bmovie)[4])-float(list(givenvector)[4])) <= 1:
             key = list(bmovie)[4]
+            bmovie[key] = 1
+        if list(givenvector)[5] == list(bmovie)[5] and list(bmovie)[5] != 'None1':
+            key = list(bmovie)[5]
+            bmovie[key] = 1
+        if list(givenvector)[6] == list(bmovie)[6] and list(bmovie)[6] != 'None2':
+            key = list(bmovie)[6]
             bmovie[key] = 1
     ####start the knn equation
         abot = 0
@@ -147,5 +172,3 @@ def home():
        movies 
     
     return render_template('index.html', movies=movies)
-
-
