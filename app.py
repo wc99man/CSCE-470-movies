@@ -38,21 +38,28 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
             givenvector = moviedict[movie]
             # moviedict.pop(movie)
 
+#######################################this line prevents us from comparing the given movie with itself. This might not have been an issue, and can be easaly removed
+    moviedict.pop(moviename)
+#########################
 
     if givenvector == {}:  #####just some basic error checking to make sure we found a movie
         print("Movie not found. Please check that you entered the official movie title.")
         return {}
     ####this is the best way I found to set a value at a specific entry location in a dict
     key = list(givenvector)[0]
-    givenvector[key] = 0  ######### we need to set to what ever value we want
+    givenvector[key] = 0  ######### movie ID is set to 0 since we are not comparing it
     key = list(givenvector)[1]
-    givenvector[key] = 5  ######### we need to set to what ever value we want
+    givenvector[key] = 5  ######### start year is considered a bad indicator so it's value is low
     key = list(givenvector)[2]
-    givenvector[key] = 3  ######### we need to set to what ever value we want
+    givenvector[key] = 3  ######### runtime is also considered a bad indicator
     key = list(givenvector)[3]
-    givenvector[key] = 20  ######### we need to set to what ever value we want
+    givenvector[key] = 20  ######### genre is a strong indicator so we value it heavaly
     key = list(givenvector)[4]
-    givenvector[key] = 10  ######### we need to set to what ever value we want
+    givenvector[key] = 10  ######### radtings are a middling indicator so it has a decent score
+    key = list(givenvector)[5]
+    givenvector[key] = 20  ######### directors is considered a strong indicator###################################
+    key = list(givenvector)[6]
+    givenvector[key] = 20  ######### writers is also a strong indicator######################################
 
     for movie in moviedict:  ####now we need to set up the movie vectors and run the comparisons
         bmovie = moviedict[movie]  ####get the dict for current movie
@@ -73,6 +80,12 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
             bmovie[key] = 1
         if abs(float(list(bmovie)[4])-float(list(givenvector)[4])) <= 1:
             key = list(bmovie)[4]
+            bmovie[key] = 1
+        if list(givenvector)[5] == list(bmovie)[5]:
+            key = list(bmovie)[5]
+            bmovie[key] = 1
+        if list(givenvector)[6] == list(bmovie)[6]:
+            key = list(bmovie)[6]
             bmovie[key] = 1
     ####start the knn equation
         abot = 0
