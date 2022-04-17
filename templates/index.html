@@ -54,7 +54,7 @@
     </div>
   </section>
 
-  <div class="album py-5 bg-light">
+  <!-- <div class="album py-5 bg-light">
     <div class="container">
       <div class="row">
       {% for movie in movies %}
@@ -63,15 +63,31 @@
             <div class="card-body">
               <p></p>
               <h5><b class="card-text">{{ movie}}</b></h5>
-         
-              <div class="d-flex justify-content-between align-items-center">
-                
+              <div class="d-flex justify-content-between align-items-center"> //NEW LINE
               </div>
             </div>
           </div>
         </div>
         {% endfor %}
       </div>
+    </div>
+  </div> -->
+
+  <div class="container">
+    <div class="row">
+      {% for movie in movies %}
+      <div class="card">
+        <h2>{{movie.title}}</h2>
+        <hr/>
+        <p> {{movie.genres}}</p>
+        <p> Ratings: {{movie.rating}} Stars</p>
+        <p> Released Year: {{movie.year}}</p>
+        <p> Runtime: {{movie.runtime}} minutes</p>
+        <button onclick="window.location.href='https://www.imdb.com/title/{{movie.id}}/'" type="button"> Check Out </button>
+        
+        <!-- <button>Next</button> -->
+      </div>
+      {% endfor %}
     </div>
   </div>
 

@@ -151,8 +151,10 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
             'year' : title_merged.loc[title_merged['title'] == i, 'startYear'].iloc[0],
             'runtime' : title_merged.loc[title_merged['title'] == i, 'runtimeMinutes'].iloc[0],
             'genres' : title_merged.loc[title_merged['title'] == i, 'genres'].iloc[0],
-            'rating' : title_merged.loc[title_merged['title'] == i, 'averageRating'].iloc[0]
+            'rating' : title_merged.loc[title_merged['title'] == i, 'averageRating'].iloc[0],
 
+            # TRYING TO ADD MOVIEID - FOR IMDB LINK ==> 'id': titleId
+            'id': title_merged.loc[title_merged['title'] == i, 'titleId'].iloc[0]
         }
         rec_movies.append(result_dict)
         
