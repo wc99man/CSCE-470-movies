@@ -1,4 +1,4 @@
-.jumbotron {
+/* .jumbotron {
   padding-top: 3rem;
   padding-bottom: 3rem;
   margin-bottom: 0;
@@ -30,7 +30,7 @@ footer {
 
 footer p {
   margin-bottom: .25rem;
-}
+} */
 
 
 
@@ -38,7 +38,8 @@ footer p {
   --blue: #1e90ff;
   --white: #ffffff;
   --black: #282828;
-  --point: salmon;
+  /* --point: salmon; */
+  --point: #1F271B;
   --point-light: lighten(var(--point), 5%);
 
   --ratio: 1.618;
@@ -54,14 +55,62 @@ footer p {
   
 }
 
+
+
+
+.jumbotron {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-color: #ffffff;
+  height: 25%;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+} 
+
+
+
+/* CARD STUFF */
+
 *{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body{
-  background-color: var(--point);
+  /* background-color: yellow; */
+  padding-top: 3%;
+  background: linear-gradient(90deg,#1e90ff, #00fa9a);
 }
+
+/* .container{
+  background: linear-gradient(105deg,#1e90ff, #00fa9a);
+} */
 
 .container2{
   width: 80%;
@@ -212,3 +261,8 @@ button{
   to {-webkit-box-shadow: var(--card-shadow);box-shadow: var(--card-shadow);}
 }
 
+.row{
+  /* padding-left: 10%; */
+  margin-left: 14%;
+  margin-top: 5%;
+}
