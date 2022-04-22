@@ -60,11 +60,13 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
     key = list(givenvector)[0]
     givenvector[key] = 0  ######### movie ID is set to 0 since we are not comparing it
     key = list(givenvector)[1]
-    givenvector[key] = 15  ######### start year is considered a bad indicator so it's value is low
+    givenvector[key] = 20  ######### start year is considered a bad indicator so it's value is low
+    #givenvector[key] = 20
     key = list(givenvector)[2]
     givenvector[key] = 3  ######### runtime is also considered a bad indicator
     key = list(givenvector)[3]
-    givenvector[key] = 20  ######### genre is a strong indicator so we value it heavaly
+    givenvector[key] = 25  ######### genre is a strong indicator so we value it heavaly
+    #givenvector[key] = 25  
     key = list(givenvector)[4]
     givenvector[key] = 5  ######### ratings are a middling indicator so it has a decent score
     key = list(givenvector)[5]
@@ -151,13 +153,27 @@ def predict(moviename, moviedict):  ##### we need the name of the movie so we ca
             'year' : title_merged.loc[title_merged['title'] == i, 'startYear'].iloc[0],
             'runtime' : title_merged.loc[title_merged['title'] == i, 'runtimeMinutes'].iloc[0],
             'genres' : title_merged.loc[title_merged['title'] == i, 'genres'].iloc[0],
-            'rating' : title_merged.loc[title_merged['title'] == i, 'averageRating'].iloc[0]
+            'rating' : title_merged.loc[title_merged['title'] == i, 'averageRating'].iloc[0],
 
+            # TRYING TO ADD MOVIEID - FOR IMDB LINK ==> 'id': titleId
+            'id': title_merged.loc[title_merged['title'] == i, 'titleId'].iloc[0],
+
+            #MOVIE POSTER
+            'poster': requests.get("https://www.omdbapi.com/?i="+title_merged.loc[title_merged['title'] == i, 'titleId'].iloc[0]+"&apikey=4f73af2f").json()['Poster']
         }
         rec_movies.append(result_dict)
         
     return rec_movies
 
+
+# def get_movie_poster(movies):
+#     title1=movies[0]['id']
+#     title2=movies[1]['id']
+#     title3=movies[2]['id']
+#     response1=requests.get("https://www.omdbapi.com/?i="+title1+"&apikey=4f73af2f").json()
+#     response2=requests.get("https://www.omdbapi.com/?i="+title2+"&apikey=4f73af2f").json()
+#     response3=requests.get("https://www.omdbapi.com/?i="+title3+"&apikey=4f73af2f").json()
+#     return ([response1['Poster'], response2['Poster'], response3['Poster']])
 
 app = Flask(__name__)
 
@@ -165,10 +181,18 @@ app = Flask(__name__)
 def home():
     userMovie = request.args.get('query')
     movies = []
+    posters=[]
 
     if userMovie: 
         movies =  predict(userMovie, title_dict)
     else:
        movies 
     
+    # if (len(movies)!=0):
+    #     posters=get_movie_poster(movies)
+    # else:
+    #     posters=[]
+    
+    print("PREDICTION: ",movies)
+    # print("POSTERS: ", posters)
     return render_template('index.html', movies=movies)

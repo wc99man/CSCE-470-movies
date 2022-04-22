@@ -37,7 +37,7 @@
 <main role="main">
   <div class="align-right">
   </div>
-  <section class="jumbotron text-center">
+  <!-- <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading">Netflix & Index</h1>
       <h1 class="jumbotron-heading">Search for Movies</h1>
@@ -52,9 +52,9 @@
       </p>
       </form>
     </div>
-  </section>
+  </section> -->
 
-  <div class="album py-5 bg-light">
+  <!-- <div class="album py-5 bg-light">
     <div class="container">
       <div class="row">
       {% for movie in movies %}
@@ -63,9 +63,7 @@
             <div class="card-body">
               <p></p>
               <h5><b class="card-text">{{ movie}}</b></h5>
-         
-              <div class="d-flex justify-content-between align-items-center">
-                
+              <div class="d-flex justify-content-between align-items-center"> //NEW LINE
               </div>
             </div>
           </div>
@@ -73,7 +71,47 @@
         {% endfor %}
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <div class="container">
+    <!-- <section class="jumbotron text-center"> -->
+    <div class="jumbotron text-center">
+      <div class="container">
+        <h1 class="MuiTypography-root MuiTypography-h4 css-1yzfuwe"><span>Netflix & Index</span></h1>
+        <h1 class="jumbotron-heading">Search for Movies</h1>
+        <p class="lead text-muted"></p>
+        <form method="GET">
+        <div class="input-group mb-3">
+          <input type="text" name="query" class="form-control">
+        </div>
+        <p>
+          <button type="submit" name="submit" value="search" class="btn btn-primary my-2" style="background-color: #1F271B; border-color: #1F271B;">Search</button>
+          
+        </p>
+        </form>
+      </div>
+    </div>
+    <!-- </section> -->
+
+    <div class="row">
+      {% for movie in movies %}
+      <div class="card">
+        <center><h2>{{movie.title}}</h2></center>
+        <hr/>
+        <br>
+        <center><img src="{{movie.poster}}" width="100" height="150"> </center>
+        <br>
+        <p> {{movie.genres}}</p>
+        <p> Ratings: {{movie.rating}} Stars</p>
+        <p> Released Year: {{movie.year}}</p>
+        <p> Runtime: {{movie.runtime}} minutes</p>
+        <button onclick="window.location.href='https://www.imdb.com/title/{{movie.id}}/'" type="button"> Learn more</button>
+        
+        <!-- <button>Next</button> -->
+      </div>
+      {% endfor %}
+    </div>
+  </div> 
 
 </main>
 </body>
